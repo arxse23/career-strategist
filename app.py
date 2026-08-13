@@ -206,7 +206,8 @@ if locked:
     ### Unlock unlimited lifetime access
     For less than the price of a coffee, get unlimited gap analyses, resume rewrites and interview scripts for your whole job search.
 
-    Unlock your unlimited plan here https://sleekforge.gumroad.com/l/career-strategist**
+    Unlock your unlimited plan here https://sleekforge.gumroad.com/l/career-strategist
+    ##
     """)
 
     unlock_code = st.text_input("Already purchased? Enter your unlock code:", type="password")
