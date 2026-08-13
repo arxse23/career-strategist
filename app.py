@@ -5,6 +5,15 @@ import os
 # -----------------------------
 # 1. PAGE CONFIG
 # -----------------------------
+st.set_page_config(
+    page_title="Career Change Strategist",
+    page_icon="🎯",
+    layout="wide"
+)
+
+# -----------------------------
+# 2. HIDE STREAMLIT BRANDING
+# -----------------------------
 st.markdown("""
 <style>
 #MainMenu {visibility: hidden;}
@@ -13,14 +22,8 @@ footer {visibility: hidden;}
 </style>
 """, unsafe_allow_html=True)
 
-st.set_page_config(
-    page_title="Career Change Strategist",
-    page_icon="🎯",
-    layout="wide" # Back to wide so the two columns have room!
-)
-
 # -----------------------------
-# 3. SIDEBAR (RESTORED)
+# 3. SIDEBAR
 # -----------------------------
 def get_secret_key():
     try:
@@ -32,15 +35,10 @@ api_key = get_secret_key() or os.environ.get("ANTHROPIC_API_KEY", "")
 
 with st.sidebar:
     st.header("⚙️ Settings")
-
     if api_key:
         st.success("API key detected.")
     else:
-        entered_key = st.text_input(
-            "Paste Anthropic API Key",
-            type="password",
-            help="Get a key at console.anthropic.com"
-        )
+        entered_key = st.text_input("Paste Anthropic API Key", type="password")
         if entered_key:
             api_key = entered_key
         st.markdown("Get a key at [console.anthropic.com](https://console.anthropic.com/)")
@@ -57,47 +55,31 @@ with st.sidebar:
     st.markdown("3. Let AI translate your skills.")
 
 # -----------------------------
-# 4. HEADER & INFO BOX
+# 4. HEADER
 # -----------------------------
-st.title("Career Change Strategist")
-st.markdown(
-    "**Turn your past experience into a strategic battle plan for your career pivot.**"
-)
+st.title("🎯 Career Change Strategist")
+st.markdown("**Turn your past experience into a strategic battle plan for your career pivot.**")
 
 st.markdown("""
-
+<div style="background-color: #EEF2FF; padding: 15px; border-radius: 8px; border-left: 5px solid #4F46E5; margin-bottom: 20px;">
     <b>What you'll get:</b> An honest gap analysis, ATS keyword match, and rewritten resume bullets based strictly on your real experience.
-
+</div>
 """, unsafe_allow_html=True)
 
 # -----------------------------
-# 5. INPUTS (TWO COLUMNS RESTORED)
+# 5. SESSION STATE + FREE LIMIT
 # -----------------------------
-col1, col2 = st.columns(2)
+if "gen_count" not in st.session_state:
+    st.session_state.gen_count = 0
+if "unlocked" not in st.session_state:
+    st.session_state.unlocked = False
+if "result" not in st.session_state:
+    st.session_state.result = ""
 
-with col1:
-    st.subheader("1. The Job You Want")
-    target_role = st.text_input("Target Role", placeholder="e.g., Paralegal")
-    job_desc = st.text_area(
-        "Job Description",
-        height=300,
-        placeholder="Paste the full job description here..."
-    )
-
-with col2:
-    st.subheader("2. Your Background")
-    years_exp = st.text_input(
-        "Current Field / Years",
-        placeholder="e.g., Retail management, 5 years"
-    )
-    resume = st.text_area(
-        "Your Resume / Experience",
-        height=300,
-        placeholder="Paste your resume bullets or background summary..."
-    )
+locked = (st.session_state.gen_count >= 5) and not st.session_state.unlocked
 
 # -----------------------------
-# 6. PROMPTS (PREMIUM VERSION)
+# 6. SYSTEM PROMPT
 # -----------------------------
 system_prompt = """
 You are an expert career coach and executive resume writer specializing in career transitions.
@@ -117,7 +99,53 @@ You must:
 10. Write clearly, simply, and naturally. Avoid generic filler phrases like "strong work ethic" or "passionate".
 """
 
-user_prompt = f"""
+# -----------------------------
+# 7. LOCKED (PAYWALL) vs FREE UI
+# -----------------------------
+if locked:
+    st.markdown("---")
+    st.error("🚫 **You've used all 5 of your free Career Plans!**")
+    st.markdown("""
+    ### Unlock unlimited lifetime access
+    For less than the price of a coffee, get unlimited gap analyses, resume rewrites and interview scripts for your whole job search.
+
+    👉 **[Get unlimited access for $9](https://YOUR-GUMROAD-LINK-HERE.com)**
+    """)
+
+    unlock_code = st.text_input("Already purchased? Enter your unlock code:", type="password")
+    if unlock_code.strip().upper() == "PIVOT2024":
+        st.session_state.unlocked = True
+        st.rerun()
+
+else:
+    if not st.session_state.unlocked:
+        remaining = 5 - st.session_state.gen_count
+        st.info(f"🎟️ **Free plan:** {remaining} of 5 free plans remaining.")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.subheader("1. The Job You Want")
+        target_role = st.text_input("Target Role", placeholder="e.g., Paralegal")
+        job_desc = st.text_area(
+            "Job Description",
+            height=300,
+            placeholder="Paste the full job description here..."
+        )
+
+    with col2:
+        st.subheader("2. Your Background")
+        years_exp = st.text_input(
+            "Current Field / Years",
+            placeholder="e.g., Retail management, 5 years"
+        )
+        resume = st.text_area(
+            "Your Resume / Experience",
+            height=300,
+            placeholder="Paste your resume bullets or background summary..."
+        )
+
+    user_prompt = f"""
 TARGET ROLE:
 {target_role}
 
@@ -136,7 +164,7 @@ When rewriting resume bullets, you must use the user's specific metrics and achi
 
 When selecting rewritten resume bullets, prioritize the user's experience that most closely matches the job description. Favor evidence related to documentation, records, written correspondence, case handling, confidential or sensitive information, compliance, audits, reporting, deadlines, stakeholder liaison, research-like analysis, and process improvement. Do not include trivial or weak duties if stronger relevant evidence exists.
 
-If the user lacks a core required qualification or direct experience, state clearly that the role is a stretch. Do not present the user as a direct match. Suggest honest bridge language and, where appropriate, adjacent roles that may be more realistic. 
+If the user lacks a core required qualification or direct experience, state clearly that the role is a stretch. Do not present the user as a direct match. Suggest honest bridge language and, where appropriate, adjacent roles that may be more realistic.
 
 For legal, compliance, government, case management, or administrative roles, prioritize evidence involving case records, confidential or sensitive matters, written correspondence, escalation documentation, audits, compliance, deadlines, reporting, stakeholder liaison, and structured analysis. Do not use the phrase "legal research" unless the user explicitly has legal research experience. If the user has research-like experience, describe it as "structured analysis", "operational investigation", "root-cause analysis", or "records-based analysis" instead.
 
@@ -157,7 +185,7 @@ List the top hard skills and soft skills from the job description.
 List important requirements the user does not clearly have, and suggest how to address them honestly in a cover letter or interview.
 
 ## 📊 Role Fit Assessment
-Provide a conservative role fit assessment in a Markdown table. 
+Provide a conservative role fit assessment in a Markdown table.
 | Category | Assessment |
 |---|---|
 | Direct match | Low / Medium / High |
@@ -177,36 +205,32 @@ Write 2-3 sentences for a cover letter that honestly acknowledges the career cha
 Give one strong, honest narrative hook the user can use when asked: "Tell me about yourself", "Why are you changing careers?", or "How does your experience relate to this role?". Include one specific example from the user's experience.
 """
 
-# -----------------------------
-# 7. GENERATION LOGIC
-# -----------------------------
-if "result" not in st.session_state:
-    st.session_state.result = ""
+    if st.button("Generate Strategic Career Plan ✨", type="primary"):
+        if not api_key:
+            st.error("Please add your API key in the sidebar.")
+        elif not job_desc or not resume:
+            st.warning("Please paste both the job description and your resume.")
+        else:
+            with st.spinner("Analyzing keywords and rewriting bullets..."):
+                try:
+                    client = anthropic.Anthropic(api_key=api_key)
 
-if st.button("Generate Strategic Career Plan ✨", type="primary"):
-    if not api_key:
-        st.error("Please add your API key in the sidebar.")
-    elif not job_desc or not resume:
-        st.warning("Please paste both the job description and your resume.")
-    else:
-        with st.spinner("Analyzing keywords and rewriting bullets..."):
-            try:
-                client = anthropic.Anthropic(api_key=api_key)
-                
-                message = client.messages.create(
-                    model=model,
-                    temperature=0.3,
-                    max_tokens=3000,
-                    system=system_prompt,
-                    messages=[
-                        {"role": "user", "content": user_prompt}
-                    ]
-                )
-                
-                st.session_state.result = message.content[0].text
+                    message = client.messages.create(
+                        model=model,
+                        temperature=0.3,
+                        max_tokens=3000,
+                        system=system_prompt,
+                        messages=[{"role": "user", "content": user_prompt}]
+                    )
 
-            except Exception as e:
-                st.error(f"Error: {e}")
+                    st.session_state.result = message.content[0].text
+
+                    if not st.session_state.unlocked:
+                        st.session_state.gen_count += 1
+                        st.rerun()
+
+                except Exception as e:
+                    st.error(f"Error: {e}")
 
 # -----------------------------
 # 8. DISPLAY RESULTS
@@ -227,10 +251,8 @@ if st.session_state.result:
 # 9. FOOTER
 # -----------------------------
 st.markdown("---")
-st.markdown(
-    """
-    <p style="font-size 10px;">This tool provides AI-generated career advice. Always review before submitting applications.</p>
-    
-    """,
-    unsafe_allow_html=True
-)
+st.markdown("""
+<div style="text-align: center; color: #6B7280; font-size: 12px; margin-top: 30px;">
+    <b>Disclaimer:</b> This tool provides AI-generated career advice. Always review before submitting applications.
+</div>
+""", unsafe_allow_html=True)
