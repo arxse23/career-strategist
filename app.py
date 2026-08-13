@@ -5,6 +5,14 @@ import os
 # -----------------------------
 # 1. PAGE CONFIG
 # -----------------------------
+st.markdown("""
+<style>
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+.stDeployButton {display: none;}
+</style>
+""", unsafe_allow_html=True)
+
 st.set_page_config(
     page_title="Career Change Strategist",
     page_icon="🎯",
@@ -39,7 +47,7 @@ with st.sidebar:
 
     model = st.selectbox(
         "Claude Model",
-        ["claude-3-5-sonnet-latest", "claude-3-5-haiku-latest"]
+        ["claude-haiku-4-5-20251001", "claude-sonnet-4-5-20250929"]
     )
 
     st.markdown("---")
