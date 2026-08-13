@@ -57,14 +57,10 @@ with st.sidebar:
 # -----------------------------
 # 4. HEADER
 # -----------------------------
-st.title("🎯 Career Change Strategist")
+st.title("Career Change Strategist")
 st.markdown("**Turn your past experience into a strategic battle plan for your career pivot.**")
 
-st.markdown("""
-<div style="background-color: #EEF2FF; padding: 15px; border-radius: 8px; border-left: 5px solid #4F46E5; margin-bottom: 20px;">
-    <b>What you'll get:</b> An honest gap analysis, ATS keyword match, and rewritten resume bullets based strictly on your real experience.
-</div>
-""", unsafe_allow_html=True)
+
 
 # -----------------------------
 # 5. SESSION STATE + FREE LIMIT
@@ -109,7 +105,7 @@ if locked:
     ### Unlock unlimited lifetime access
     For less than the price of a coffee, get unlimited gap analyses, resume rewrites and interview scripts for your whole job search.
 
-    👉 **[Get unlimited access for $9](https://YOUR-GUMROAD-LINK-HERE.com)**
+    Let me know if you'll use this :)**
     """)
 
     unlock_code = st.text_input("Already purchased? Enter your unlock code:", type="password")
