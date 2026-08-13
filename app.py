@@ -72,7 +72,7 @@ if "unlocked" not in st.session_state:
 if "result" not in st.session_state:
     st.session_state.result = ""
 
-locked = (st.session_state.gen_count >= 5) and not st.session_state.unlocked
+locked = (st.session_state.gen_count >= 3) and not st.session_state.unlocked
 
 # -----------------------------
 # 6. SYSTEM PROMPT
@@ -100,12 +100,12 @@ You must:
 # -----------------------------
 if locked:
     st.markdown("---")
-    st.error("🚫 **You've used all 5 of your free Career Plans!**")
+    st.error("🚫 **You've used all 3 of your free Career Plans!**")
     st.markdown("""
     ### Unlock unlimited lifetime access
     For less than the price of a coffee, get unlimited gap analyses, resume rewrites and interview scripts for your whole job search.
 
-    Let me know if you'll use this :)**
+    Unlock your unlimited plan here https://sleekforge.gumroad.com/l/career-strategist**
     """)
 
     unlock_code = st.text_input("Already purchased? Enter your unlock code:", type="password")
@@ -115,8 +115,8 @@ if locked:
 
 else:
     if not st.session_state.unlocked:
-        remaining = 5 - st.session_state.gen_count
-        st.info(f"🎟️ **Free plan:** {remaining} of 5 free plans remaining.")
+        remaining = 3 - st.session_state.gen_count
+        st.info(f"🎟️ **Free plan:** {remaining} of 3 free plans remaining.")
 
     col1, col2 = st.columns(2)
 
