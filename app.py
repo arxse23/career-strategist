@@ -12,13 +12,89 @@ st.set_page_config(
 )
 
 # -----------------------------
-# 2. HIDE STREAMLIT BRANDING
+# 2. HIDE STREAMLIT BRANDING + CASE-FILE STYLING
 # -----------------------------
 st.markdown("""
 <style>
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 .stDeployButton {display: none;}
+
+/* Paper grain — same trick as the landing page, no external image needed */
+.stApp {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/></svg>");
+    background-repeat: repeat;
+}
+
+/* Case-file header block */
+.cf-eyebrow {
+    font-family: 'FiraCode', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #B03A2E;
+    margin-bottom: 0.35rem;
+}
+.cf-title-row { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.2rem; }
+.cf-title {
+    font-family: 'DMSans', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    font-size: 2.1rem;
+    color: #20242B;
+    margin: 0;
+}
+.cf-subtitle { font-size: 1rem; color: #4A4535; margin-top: 0.3rem; margin-bottom: 1.2rem; }
+.cf-hr { border: none; border-top: 1px solid #A79B7A; margin: 1.4rem 0; }
+
+/* Sidebar section labels */
+section[data-testid="stSidebar"] h2, section[data-testid="stSidebar"] h3 {
+    font-family: 'FiraCode', monospace !important;
+    font-size: 0.85rem !important;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+/* Buttons — "double stamp impression" outline, same motif as the landing page */
+.stButton > button, [data-testid="stButton"] button,
+.stDownloadButton > button, [data-testid="stDownloadButton"] button {
+    position: relative;
+    font-family: 'DMSans', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    border-width: 1.5px !important;
+}
+.stButton > button[kind="primary"], [data-testid="stButton"] button[kind="primary"] {
+    box-shadow: -4px 4px 0 0 rgba(176, 58, 46, 0.35);
+}
+.stButton > button[kind="primary"]:hover, [data-testid="stButton"] button[kind="primary"]:hover {
+    box-shadow: -2px 2px 0 0 rgba(176, 58, 46, 0.35);
+    transform: translate(-2px, 2px);
+}
+
+/* Alerts (free-plan counter / paywall) — left accent bar, document-notice feel */
+div[data-testid="stAlert"] {
+    border-radius: 0.15rem !important;
+    border-left: 4px solid currentColor;
+}
+
+/* Text areas / inputs — quieter focus ring matching the stamp red */
+textarea:focus, input:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 2px #B03A2E !important;
+    border-color: #B03A2E !important;
+}
+
+/* Section subheaders (1. The Job You Want / 2. Your Background) */
+h3 {
+    font-family: 'DMSans', sans-serif !important;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    font-size: 1.05rem !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -57,9 +133,14 @@ with st.sidebar:
 # -----------------------------
 # 4. HEADER
 # -----------------------------
-st.title("Career Change Strategist")
-st.markdown("**Turn your past experience into a strategic battle plan for your career pivot.**")
-
+st.markdown("""
+<div class="cf-eyebrow">Case file · Resume vs. reality</div>
+<div class="cf-title-row">
+    <div class="cf-title">Career Change Strategist</div>
+</div>
+<div class="cf-subtitle">Turn your past experience into a strategic battle plan for your career pivot.</div>
+<hr class="cf-hr" />
+""", unsafe_allow_html=True)
 
 
 # -----------------------------
@@ -248,7 +329,7 @@ if st.session_state.result:
 # -----------------------------
 st.markdown("---")
 st.markdown("""
-<div style="text-align: center; color: #6B7280; font-size: 12px; margin-top: 30px;">
+<div style="text-align: center; color: #6B6355; font-size: 12px; margin-top: 30px; font-family: 'FiraCode', monospace;">
     <b>Disclaimer:</b> This tool provides AI-generated career advice. Always review before submitting applications.
 </div>
 """, unsafe_allow_html=True)

@@ -38,21 +38,21 @@ style = "normal"
 weight = 500
 
 [theme]
-# 🚀 MODERN STARTUP PALETTE 🚀
-primaryColor = "#8b5cf6"             # Purple-500 - modern, trendy, growth-focused
-backgroundColor = "#ffffff"          # Pure white - clean, modern foundation
-secondaryBackgroundColor = "#fafafa" # Neutral-50 - subtle modern gray
-textColor = "#18181b"                # Zinc-900 - high contrast, modern
-linkColor = "#7c3aed"                # Purple-600 - slightly darker for links
-borderColor = "#e4e4e7"              # Zinc-200 - clean, modern borders
+# CASE FILE — same palette as the Gumroad landing page, so the whole funnel matches
+primaryColor = "#B03A2E"             # Stamp red — buttons, active states
+backgroundColor = "#EFE7D2"          # Kraft paper — reads as a document, not a SaaS dashboard
+secondaryBackgroundColor = "#DED2B0" # Deeper kraft — widgets, sidebar
+textColor = "#20242B"                # Charcoal ink
+linkColor = "#8F2E24"                # Darker stamp red, readable on paper
+borderColor = "#A79B7A"              # Muted kraft-brown hairline
+baseRadius = "0.15rem"               # Near-square corners — document, not app-icon rounding
+font = "DMSans"
+headingFont = "DMSans"
+codeFont = "FiraCode"
+codeBackgroundColor = "#E3D7B8"
 showWidgetBorder = true
-baseRadius = "0.75rem"               # Generous rounding - modern, friendly
-font = "DMSans"                      # DM Sans - modern startup-style typography
-headingFont = "DMSans"               # Consistent hierarchy
-codeFont = "FiraCode"                # Fira Code - popular developer monospace
-codeBackgroundColor = "#f4f4f5"      # Zinc-100 - subtle code background
 showSidebarBorder = true
 
 [theme.sidebar]
-backgroundColor = "#fafafa"          # Neutral-50 - clean sidebar
-secondaryBackgroundColor = "#f4f4f5" # Zinc-100 - subtle sections
+backgroundColor = "#DED2B0"
+secondaryBackgroundColor = "#CFC29B"
