@@ -40,16 +40,16 @@ weight = 500
 [theme]
 # CASE FILE — same palette as the Gumroad landing page, so the whole funnel matches
 primaryColor = "#B03A2E"             # Stamp red — buttons, active states
-backgroundColor = "#EFE7D2"          # Kraft paper — reads as a document, not a SaaS dashboard
-secondaryBackgroundColor = "#DED2B0" # Deeper kraft — widgets, sidebar
+backgroundColor = "#EFE7D2"          # Kraft paper — the page surface
+secondaryBackgroundColor = "#E3D6AF" # Slightly deeper kraft — widgets, close in tone but bordered
 textColor = "#20242B"                # Charcoal ink
 linkColor = "#8F2E24"                # Darker stamp red, readable on paper
-borderColor = "#A79B7A"              # Muted kraft-brown hairline
+borderColor = "#8A7C55"              # Deeper kraft-brown hairline — visible field edges
 baseRadius = "0.15rem"               # Near-square corners — document, not app-icon rounding
 font = "DMSans"
 headingFont = "DMSans"
 codeFont = "FiraCode"
-codeBackgroundColor = "#E3D7B8"
+codeBackgroundColor = "#DBCB9C"
 showWidgetBorder = true
 showSidebarBorder = true
 

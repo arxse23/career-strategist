@@ -75,17 +75,37 @@ section[data-testid="stSidebar"] h2, section[data-testid="stSidebar"] h3 {
     transform: translate(-2px, 2px);
 }
 
-/* Alerts (free-plan counter / paywall) — left accent bar, document-notice feel */
-div[data-testid="stAlert"] {
+/* Alerts (free-plan counter / paywall) — force off Streamlit's default blue/grey onto the kraft tone */
+div[data-testid="stAlert"],
+div[data-testid="stAlert"] > div {
+    background-color: #E3D6AF !important;
     border-radius: 0.15rem !important;
-    border-left: 4px solid currentColor;
+    border: 1px solid #8A7C55 !important;
+    border-left: 4px solid #B03A2E !important;
+}
+div[data-testid="stAlert"] * {
+    color: #20242B !important;
+    fill: #20242B !important;
 }
 
-/* Text areas / inputs — quieter focus ring matching the stamp red */
+/* Text areas / inputs / selects — same tone as the page, but bordered so fields are still legible */
+.stTextArea textarea, .stTextInput input, div[data-baseweb="select"] {
+    background-color: #E3D6AF !important;
+    border: 1.5px solid #8A7C55 !important;
+    border-radius: 0.15rem !important;
+}
 textarea:focus, input:focus {
     outline: none !important;
     box-shadow: 0 0 0 2px #B03A2E !important;
     border-color: #B03A2E !important;
+}
+
+/* Dividers — Streamlit's default hr is nearly invisible on this palette */
+hr {
+    border: none !important;
+    border-top: 1px solid #8A7C55 !important;
+    opacity: 1 !important;
+    margin: 1.2rem 0 !important;
 }
 
 /* Section subheaders (1. The Job You Want / 2. Your Background) */
