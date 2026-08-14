@@ -1,6 +1,5 @@
 import streamlit as st
 import anthropic
-from secret import secret_code
 import os
 
 # -----------------------------
@@ -213,7 +212,7 @@ if locked:
     """)
 
     unlock_code = st.text_input("Already purchased? Enter your unlock code:", type="password")
-    if unlock_code.strip().upper() == secret_code:
+    if unlock_code.strip().upper() == st.secrets.get("UNLOCK_CODE", ""):
         st.session_state.unlocked = True
         st.rerun()
 
