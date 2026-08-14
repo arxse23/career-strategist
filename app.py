@@ -16,6 +16,7 @@ st.set_page_config(
 # -----------------------------
 st.markdown("""
 <style>
+<meta name="google-site-verification" content="mr9Dpj42XOjaOL89SLkasqLYJFrVkZveG6wuAgaoDKs" />
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
 .stDeployButton {display: none;}
